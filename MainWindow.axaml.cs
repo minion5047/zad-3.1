@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -14,6 +15,7 @@ public partial class MainWindow : Window
     private bool _isWorkPhase = true;
     private bool _hasStartedCurrentPhase;
     private int _completedCycles;
+    private readonly List<string> _history = new();
 
     public MainWindow()
     {
@@ -93,6 +95,8 @@ public partial class MainWindow : Window
         if (_isWorkPhase)
         {
             _completedCycles++;
+            _history.Add($"{DateTime.Now:HH:mm} — cykl {_completedCycles}");
+            HistoryList.ItemsSource = _history.ToArray();
             CyclesText.Text = $"Skończone cykle: {_completedCycles}";
 
             _isWorkPhase = false;
